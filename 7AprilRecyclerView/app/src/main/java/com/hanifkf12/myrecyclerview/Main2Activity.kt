@@ -14,6 +14,7 @@ class Main2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
         val sharedPref = getSharedPreferences("coba", Context.MODE_PRIVATE)
 
+        //Set Data SharedPref
         val editor = sharedPref.edit()
         editor.putBoolean("status", false)
         editor.putString("nama","SIapa")
@@ -25,11 +26,13 @@ class Main2Activity : AppCompatActivity() {
             apply()
         }
 
-
-        Log.d(TAG, sharedPref.getString("name","Tidak ADA")!!)
+        //Get Data SharedPref
+        Log.d(TAG, sharedPref.getString("name","kosong mas")!!)
         Toast.makeText(this,sharedPref.getString("name","Tidak ADA")!!, Toast.LENGTH_SHORT).show()
 
         val preferenceHelper = PreferenceHelper(this)
+        preferenceHelper.status = true //set
+        preferenceHelper.status //get
         preferenceHelper.name = "HANIIIIFFFF"
         preferenceHelper.name
         preferenceHelper.isLogin = true

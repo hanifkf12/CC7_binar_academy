@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_add_note.view.*
@@ -37,10 +38,10 @@ class MainActivity : AppCompatActivity(){
         noteList.add(Note("Wake Up", "Bangun dari mimpi indah"))
         adapter = NoteAdapter(noteList)
 //        val containerView = findViewById<>()
-        adapter.setOnClickListener(object : NoteAdapter.OnClickListenerCallback{
-            override fun onClickListener(note: Note, position: Int) {
-                Toast.makeText(this@MainActivity, note.title,Toast.LENGTH_SHORT).show()
-                showEditDialog(note,position)
+        adapter.setOnClickListener(object : NoteAdapter.OnClickListenerCallback<Note>{
+            override fun onClickListener(data: Note, position: Int) {
+                Toast.makeText(this@MainActivity, data.title,Toast.LENGTH_SHORT).show()
+                showEditDialog(data,position)
 //                Snackbar.make(containerView,note.title, Snackbar.LENGTH_SHORT).show()
             }
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(){
             showAddDialog()
         }
 
-        rv_note.layoutManager = GridLayoutManager(this,2)
+        rv_note.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         rv_note.setHasFixedSize(true)
         rv_note.adapter = adapter
     }

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class NoteAdapter(private val listNote : List<Note>) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
-    private lateinit var listener : OnClickListenerCallback
-    fun setOnClickListener(listenerCallback: OnClickListenerCallback){
+    private lateinit var listener : OnClickListenerCallback<Note>
+    fun setOnClickListener(listenerCallback: OnClickListenerCallback<Note>){
         this.listener = listenerCallback
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,8 +35,8 @@ class NoteAdapter(private val listNote : List<Note>) : RecyclerView.Adapter<Note
         }
     }
 
-    interface OnClickListenerCallback{
-        fun onClickListener(note: Note, position : Int)
+    interface OnClickListenerCallback<T>{
+        fun onClickListener(data: T, position : Int)
     }
 
 

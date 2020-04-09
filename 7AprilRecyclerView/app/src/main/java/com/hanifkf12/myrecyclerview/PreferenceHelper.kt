@@ -8,9 +8,20 @@ class PreferenceHelper(private val context: Context) {
     companion object{
         private const val NAME = "NAME"
         private const val LOGIN = "LOGIN"
+        private const val STATUS = "STATUS"
     }
-    private val sharedPreferences : SharedPreferences =
-        context.getSharedPreferences("newPref", Context.MODE_PRIVATE)
+    private val sharedPreferences : SharedPreferences = context.getSharedPreferences("coba", Context.MODE_PRIVATE)
+
+    var status : Boolean
+        get() {
+            return sharedPreferences.getBoolean(STATUS,false)
+        }
+        set(value) {
+            sharedPreferences.edit().apply(){
+                putBoolean(STATUS,value)
+                apply()
+            }
+        }
 
     var name : String?
         get() {
@@ -22,7 +33,6 @@ class PreferenceHelper(private val context: Context) {
                 apply()
             }
         }
-
     var isLogin : Boolean
         get() {
             return sharedPreferences.getBoolean(LOGIN,false)
