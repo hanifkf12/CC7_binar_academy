@@ -3,12 +3,15 @@ package com.hanifkf12.myrecyclerview
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_add_note.view.*
 import kotlinx.android.synthetic.main.dialog_edit_note.view.*
@@ -33,10 +36,12 @@ class MainActivity : AppCompatActivity(){
         noteList.add(Note("Wake Up", "Bangun dari mimpi indah"))
         noteList.add(Note("Wake Up", "Bangun dari mimpi indah"))
         adapter = NoteAdapter(noteList)
+//        val containerView = findViewById<>()
         adapter.setOnClickListener(object : NoteAdapter.OnClickListenerCallback{
             override fun onClickListener(note: Note, position: Int) {
                 Toast.makeText(this@MainActivity, note.title,Toast.LENGTH_SHORT).show()
                 showEditDialog(note,position)
+//                Snackbar.make(containerView,note.title, Snackbar.LENGTH_SHORT).show()
             }
 
         })
@@ -55,17 +60,24 @@ class MainActivity : AppCompatActivity(){
             val inflater = this.layoutInflater
             val myView = inflater.inflate(R.layout.dialog_add_note,null)
             builder.setView(myView)
-
-            builder.setPositiveButton("SIMPAN") { _, _ ->
+            val dialog = builder.create()
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+            myView.btn_simpan.setOnClickListener {
                 val title = myView.edit_title.text.toString()
                 val content = myView.edit_content.text.toString()
-                noteList.add(Note(title,content))
-                adapter.notifyDataSetChanged()
+                if (title.isEmpty() || content.isEmpty()){
+                    Toast.makeText(this, "ISI dulu DATANYA", Toast.LENGTH_SHORT).show()
+                }else{
+                    noteList.add(Note(title,content))
+                    adapter.notifyDataSetChanged()
+                    dialog.dismiss()
+                }
+
             }
-            builder.setNegativeButton("BATAL" ){dialog, _ ->
-                dialog.cancel()
+            myView.btn_cancel.setOnClickListener {
+                dialog.dismiss()
             }
-            builder.show()
         }
     }
 
