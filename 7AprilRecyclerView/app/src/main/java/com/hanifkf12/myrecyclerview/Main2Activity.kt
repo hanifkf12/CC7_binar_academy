@@ -16,18 +16,21 @@ class Main2Activity : AppCompatActivity() {
 
         //Set Data SharedPref
         val editor = sharedPref.edit()
-        editor.putBoolean("status", false)
-        editor.putString("nama","SIapa")
+        editor.putBoolean("status" , false)
+        editor.putString("nama" , "SIapa")
         editor.apply()
 
         sharedPref.edit().apply {
             putString("name","Hanif asdasd asdasd")
+            putString("name2","Nama baru")
             putBoolean("isLogin", true)
             apply()
         }
 
         //Get Data SharedPref
         Log.d(TAG, sharedPref.getString("name","kosong mas")!!)
+        sharedPref.getBoolean("isLogin",false)
+
         Toast.makeText(this,sharedPref.getString("name","Tidak ADA")!!, Toast.LENGTH_SHORT).show()
 
         val preferenceHelper = PreferenceHelper(this)
